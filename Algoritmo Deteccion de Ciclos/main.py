@@ -1,40 +1,4 @@
 def contiene_ciclo(grafo):
-    visitados = set()  # Para llevar un registro de los nodos visitados
-
-    # Función auxiliar para DFS
-    def dfs(nodo, padre):
-        visitados.add(nodo)
-        
-        # Recorre todos los vecinos del nodo actual
-        for vecino in grafo[nodo]:
-            if vecino not in visitados:  # Si el vecino no ha sido visitado
-                if dfs(vecino, nodo):  # Llamada recursiva al vecino
-                    return True
-            elif vecino != padre:  # Si el vecino ha sido visitado y no es el padre, hay un ciclo
-                return True
-
-        return False
-
-    # Ejecutamos DFS en cada componente conectado del grafo
-    for nodo in grafo:
-        if nodo not in visitados:  # Si el nodo no ha sido visitado, iniciamos DFS desde él
-            if dfs(nodo, None):  # Llamada inicial sin padre (None)
-                return True  # Si se detecta un ciclo, se devuelve True
-
-    return False  # Si no se encuentra ningún ciclo, se devuelve False
-
-# Ejemplo de uso
-grafo = {
-    1: [2, 3],
-    2: [1, 4],
-    3: [1],
-    4: [2]
-}
-
-print(contiene_ciclo(grafo))  # Debería devolver False, ya que el grafo no tiene ciclos
-
-
-def contiene_ciclo(grafo):
     """
     Verifica si un grafo no dirigido contiene un ciclo.
 
