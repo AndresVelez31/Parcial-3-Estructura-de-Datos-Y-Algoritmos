@@ -7,6 +7,16 @@ class MinHeap:
         self.heap.append((distancia, nodo))
         self._heapify_up(len(self.heap) - 1)
 
+    def _heapify_up(self, indice):
+        padre = (indice - 1) // 2
+        if indice > 0 and self.heap[indice][0] < self.heap[padre][0]:
+            self._intercambiar(indice, padre)
+            self._heapify_up(padre)
+
+    def _intercambiar(self, i, j):
+        # Intercambia correctamente los elementos en las posiciones i y j
+        self.heap[i], self.heap[j] = self.heap[j], self.heap[i]
+
     def pop_min(self):
         if not self.heap:
             return None
@@ -15,12 +25,6 @@ class MinHeap:
         min_elemento = self.heap.pop()
         self._heapify_down(0)
         return min_elemento
-
-    def _heapify_up(self, indice):
-        padre = (indice - 1) // 2
-        if indice > 0 and self.heap[indice][0] < self.heap[padre][0]:
-            self._intercambiar(indice, padre)
-            self._heapify_up(padre)
 
     def _heapify_down(self, indice):
         mas_pequeño = indice
@@ -34,10 +38,6 @@ class MinHeap:
         if mas_pequeño != indice:
             self._intercambiar(indice, mas_pequeño)
             self._heapify_down(mas_pequeño)
-
-    def _intercambiar(self, i, j):
-        # Intercambia correctamente los elementos en las posiciones i y j
-        self.heap[i], self.heap[j] = self.heap[j], self.heap[i]
 
     def is_empty(self):
         return len(self.heap) == 0
@@ -86,5 +86,12 @@ grafo = {
     4: [(2, 5), (3, 8)]
 }
 
-distancias = dijkstra(grafo, 1)
-print(distancias)
+inicio = 1  # Nodo de inicio especificado
+distancias = dijkstra(grafo, inicio)
+
+print(f"Caminos más cortos desde el nodo {inicio}:")
+
+# Formatear la salida para que cada nodo y su distancia se muestren en una línea separada
+for nodo, distancia in distancias.items():
+    print(f" - Para el nodo {nodo}: {distancia} de distancia")
+
